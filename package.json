@@ -1,0 +1,26 @@
+{
+    "name": "anas-traders",
+    "version": "1.0.0",
+    "main": "server.js",
+    "private": true,
+    "license": "GPL",
+    "author": {
+        "email": "KhizarIqbalEngr@gmail.com",
+        "name": "KhizarIqbalEngr",
+        "url": "https://github.com/EngrKhizarIqbal/"
+    },
+    "scripts": {
+        "start": "nodemon server.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "debug": "^4.1.1",
+        "express": "^4.17.1",
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.4",
+        "pug": "^3.0.0"
+    },
+    "devDependencies": {
+        "@prettier/plugin-pug": "^1.5.1"
+    }
+}
