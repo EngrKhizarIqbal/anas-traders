@@ -10,7 +10,7 @@
         "url": "https://github.com/EngrKhizarIqbal/"
     },
     "scripts": {
-        "start": "nodemon server.js"
+        "start": "nodemon --exec babel-node server.js"
     },
     "dependencies": {
         "body-parser": "^1.19.0",
@@ -18,9 +18,16 @@
         "express": "^4.17.1",
         "morgan": "^1.10.0",
         "nodemon": "^2.0.4",
-        "pug": "^3.0.0"
+        "pug": "^3.0.0",
+        "sqlite": "^4.0.14",
+        "sqlite3": "^5.0.0"
     },
     "devDependencies": {
+        "@babel/cli": "^7.11.6",
+        "@babel/core": "^7.11.6",
+        "@babel/node": "^7.10.5",
+        "@babel/plugin-proposal-class-properties": "^7.10.4",
+        "@babel/preset-env": "^7.11.5",
         "@prettier/plugin-pug": "^1.5.1"
     }
 }
