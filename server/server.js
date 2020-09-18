@@ -3,10 +3,12 @@ import path from 'path';
 import http from 'http';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
+import cors from 'cors';
 
 import AgentService from './src/db/AgentService';
 
 const app = express();
+app.use(cors());
 
 app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'pug');
@@ -17,6 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.options('*', cors());
 app.get('/agents', async (req, res) => {
     const agentService = new AgentService();
 
