@@ -6,3 +6,20 @@ thumbs.db
 /.vscode/
 *.log
 server/src/db/anas-traders.db
+
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+**/*.log
+
+tests/**/coverage/
+tests/e2e/reports
+selenium-debug.log
+
+# Editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.local
