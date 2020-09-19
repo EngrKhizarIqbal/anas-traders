@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from 'cors';
 
-import AgentService from './src/db/AgentService';
+import indexRouter from './src/routes';
 
 const app = express();
 app.use(cors());
@@ -20,21 +20,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.options('*', cors());
-app.get('/agents', async (req, res) => {
-    const agentService = new AgentService();
 
-    try {
-        const agents = await agentService.getAll();
-        res.json(agents);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error.');
-    }
-});
-
-app.all('*', (req, res) => {
-    res.render('index', { msg: 'Hello From Anas Traders.' });
-});
+app.use('/', indexRouter);
 
 http.createServer(app).listen(app.get('port'), () => {
     console.log(`Express server listening on port ${app.get('port')}`);
