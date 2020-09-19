@@ -10,8 +10,8 @@ class BaseService {
     openDatabase = async () => {
         const db = await open({
             filename: this.dbFilePath,
-            driver: sqlite3.Database
-          });
+            driver: sqlite3.Database,
+        });
 
         db.on('trace', (query) => console.log(query));
 
@@ -20,15 +20,20 @@ class BaseService {
 
     runAllQuery = async (query, params) => {
         let db = null;
+        let statement = null;
+
         try {
             db = await this.openDatabase();
 
-            const rows = await db.all(query, params);
-
+            statement = await db.prepare(query);
+            
+            const rows = await statement.all(params);
+            
             return rows;
         } catch (error) {
             throw error;
         } finally {
+            statement && (await statement.finalize());
             await db.close();
         }
     };
@@ -37,7 +42,7 @@ class BaseService {
         let db = null;
 
         try {
-            db = this.openDatabase();
+            db = await this.openDatabase();
 
             const data = await db.get(query, params);
 
@@ -61,6 +66,7 @@ class BaseService {
         } catch (error) {
             throw error;
         } finally {
+            statement && (await statement.finalize());
             await db.close();
         }
     };
