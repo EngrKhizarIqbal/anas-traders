@@ -56,13 +56,13 @@ class BaseService {
 
     runStatement = async (query, params) => {
         let db = null;
+        let statement = null;
 
         try {
             db = await this.openDatabase();
 
-            const statement = await db.prepare(query, params);
+            statement = await db.prepare(query, params);
             await statement.run();
-            await statement.finalize();
         } catch (error) {
             throw error;
         } finally {
