@@ -1,11 +1,11 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
 export function getAgents(query) {
   return request({
     url: '/agents',
     method: 'get',
     params: query
-  })
+  });
 }
 
 export function addAgent(data) {
@@ -13,7 +13,7 @@ export function addAgent(data) {
     url: '/agents',
     method: 'post',
     data
-  })
+  });
 }
 
 export function updateAgent(data) {
@@ -21,7 +21,7 @@ export function updateAgent(data) {
     url: '/agents',
     method: 'PATCH',
     data
-  })
+  });
 }
 
 export function deleteAgent(data) {
@@ -29,5 +29,5 @@ export function deleteAgent(data) {
     url: '/agents',
     method: 'DELETE',
     data
-  })
+  });
 }

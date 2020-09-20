@@ -111,8 +111,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import waves from '@/directive/waves'
+import { mapGetters } from 'vuex';
+import waves from '@/directive/waves';
 
 export default {
   name: 'Agent',
@@ -145,43 +145,43 @@ export default {
           }
         ]
       }
-    }
+    };
   },
   computed: {
     ...mapGetters(['agents'])
   },
   created() {
-    this.getAgents()
+    this.getAgents();
   },
   methods: {
     handleFilter() {
-      this.listQuery.page = 1
-      this.getAgents()
+      this.listQuery.page = 1;
+      this.getAgents();
     },
     getAgents() {
-      this.isLoading = true
+      this.isLoading = true;
       this.$store
         .dispatch('agent/getAgents', this.listQuery)
-        .finally(() => (this.isLoading = false))
+        .finally(() => (this.isLoading = false));
     },
     sortChange(data) {
-      const { prop, order } = data
-      this.listQuery.sort = `${order === 'ascending' ? '+' : '-'}${prop}`
-      this.getAgents()
+      const { prop, order } = data;
+      this.listQuery.sort = `${order === 'ascending' ? '+' : '-'}${prop}`;
+      this.getAgents();
     },
     handleCreate() {
-      this.temp = { name: '' }
-      this.dialogStatus = 'create'
-      this.agentFormDialogVisible = true
+      this.temp = { name: '' };
+      this.dialogStatus = 'create';
+      this.agentFormDialogVisible = true;
       this.$nextTick(() => {
-        this.$refs['agentForm'].clearValidate()
-      })
+        this.$refs['agentForm'].clearValidate();
+      });
     },
     handleUpdate(row) {
-      this.temp.id = row.id
-      this.temp.name = row.name
-      this.dialogStatus = 'update'
-      this.agentFormDialogVisible = true
+      this.temp.id = row.id;
+      this.temp.name = row.name;
+      this.dialogStatus = 'update';
+      this.agentFormDialogVisible = true;
     },
     handleDelete(row, $index) {
       this.$confirm(
@@ -199,10 +199,10 @@ export default {
             'agent/delete',
             { id: row.id },
             'Agent Deleted Successfully'
-          )
+          );
         },
         () => {}
-      )
+      );
     },
     addAgent() {
       this.$refs['agentForm'].validate(isValid => {
@@ -211,9 +211,9 @@ export default {
             'agent/add',
             this.temp,
             'Agent Created Successfully'
-          )
+          );
         }
-      })
+      });
     },
     updateAgent() {
       this.$refs['agentForm'].validate(isValid => {
@@ -222,27 +222,27 @@ export default {
             'agent/update',
             this.temp,
             'Agent Updated Successfully'
-          )
+          );
         }
-      })
+      });
     },
     getSortClass(key) {
-      return this.listQuery.sort === `+${key}` ? 'ascending' : 'descending'
+      return this.listQuery.sort === `+${key}` ? 'ascending' : 'descending';
     },
     dispatchAgentCrudAction(actionName, payload, successMessage) {
       this.$store.dispatch(actionName, payload).then(() => {
-        this.agentFormDialogVisible = false
+        this.agentFormDialogVisible = false;
         this.$notify({
           title: 'Success',
           message: successMessage,
           type: 'success',
           duration: 2000
-        })
-        this.getAgents()
-      })
+        });
+        this.getAgents();
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped></style>
