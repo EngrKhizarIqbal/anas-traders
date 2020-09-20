@@ -1,21 +1,36 @@
 import BaseService from './BaseService';
 
 export default class ShopService extends BaseService {
-    getShops = () => this.runAllQuery('SELECT * FROM "shop" ORDER BY `name`;');
+    getAll = ({ page, limit, sort, isAsc, searchTerm }) => {
+        sort = sort || 'name';
+        const queryParams = {};
+        let query = `SELECT * FROM "shop"`;
 
-    addShop = updatedData =>
+        if (searchTerm) {
+            query += ` WHERE lower(\`name\`) LIKE $searchTerm OR lower(\`address\`) LIKE $searchTerm`;
+            queryParams['$searchTerm'] = `%${searchTerm.toLowerCase()}%`;
+        }
+
+        if (sort) {
+            query += ` ORDER BY \`${sort}\` ${isAsc ? 'ASC' : 'DESC'};`;
+        }
+
+        return this.runAllQuery(query, queryParams);
+    };
+
+    addShop = ({ name, address }) =>
         this.runStatement('INSERT INTO "shop" (name, address) VALUES(?, ?);', [
-            updatedData.name,
-            updatedData.address
+            name,
+            address,
         ]);
 
-    updateShop = updatedData =>
+    updateShop = ({ id, name, address }) =>
         this.runStatement(
             'UPDATE "shop" SET name = ?, address = ? WHERE id = ?;',
-            [updatedData.name, updatedData.address, updatedData.id]
+            [name, address, id]
         );
 
-    removeShops = shopIds =>
+    removeShops = (shopIds) =>
         this.runStatement(
             `DELETE FROM "shop" WHERE id IN (${new Array(shopIds.length)
                 .fill('?')

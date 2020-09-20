@@ -2,7 +2,6 @@ import BaseService from './BaseService';
 
 export default class AgentService extends BaseService {
     getAll = ({ page, limit, sort, isAsc, searchTerm }) => {
-        console.log({ page, limit, sort, isAsc, searchTerm });
         sort = sort || 'name';
         const queryParams = {};
         let query = `SELECT * FROM "agents"`;

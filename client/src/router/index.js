@@ -146,6 +146,22 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/shops',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Shops',
+        component: () => import('@/views/shop/index'),
+        meta: {
+          title: 'Shops',
+          icon: 'agent-smith',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
