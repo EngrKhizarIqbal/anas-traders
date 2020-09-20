@@ -1,4 +1,9 @@
-import { getAgents, addAgent, updateAgent, deleteAgent } from '@/api/agents';
+import {
+  get as getAgents,
+  add as addAgent,
+  update as updateAgent,
+  remove as deleteAgent
+} from '@/api/agents';
 
 const state = {
   agents: []
