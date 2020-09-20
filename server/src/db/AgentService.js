@@ -1,20 +1,36 @@
 import BaseService from './BaseService';
 
 export default class AgentService extends BaseService {
-    getAll = () => this.runAllQuery('SELECT * FROM "agents" ORDER BY `name`;');
+    getAll = ({ page, limit, sort, isAsc, searchTerm }) => {
+        console.log({ page, limit, sort, isAsc, searchTerm });
+        sort = sort || 'name';
+        const queryParams = {};
+        let query = `SELECT * FROM "agents"`;
 
-    add = agentData =>
+        if (searchTerm) {
+            query += ` WHERE lower(\`name\`) LIKE $searchTerm`;
+            queryParams['$searchTerm'] = `%${searchTerm.toLowerCase()}%`;
+        }
+
+        if (sort) {
+            query += ` ORDER BY \`${sort}\` ${isAsc ? 'ASC' : 'DESC'};`;
+        }
+
+        return this.runAllQuery(query, queryParams);
+    };
+
+    add = (agentData) =>
         this.runStatement('INSERT INTO "agents" (name) VALUES(?);', [
-            agentData.name
+            agentData.name,
         ]);
 
-    update = agentData =>
+    update = (agentData) =>
         this.runStatement('UPDATE "agents" SET name = ? WHERE id = ?;', [
             agentData.name,
-            agentData.id
+            agentData.id,
         ]);
 
-    delete = agentIds =>
+    delete = (agentIds) =>
         this.runStatement(
             `DELETE FROM "agents" WHERE id IN (${new Array(agentIds.length)
                 .fill('?')
